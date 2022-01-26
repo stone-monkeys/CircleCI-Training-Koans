@@ -7,13 +7,11 @@ jobs:
       - checkout
       # These two tests should run in parallel. Make it so!
       - run:
-          name: Run Hello test
+          name: Run All tests
           command: |
-            bash src/test_hello.sh
-      - run:
-          name: Run Goodbye test
-          command: |
-            bash src/test_goodbye.sh
+            TEST=$(circleci tests glob src/test_*.sh | circleci tests split)
+
+            bash test
 workflows:
   version: 2
   test:
