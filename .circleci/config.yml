@@ -3,12 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/node
-      - image: cimg/postgres:14.0
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-        environment:
-          POSTGRES_USER: postgres
     steps:
       - checkout # check out the code in the project directory
       - run: echo "hello world" # run the `echo` command
