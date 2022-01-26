@@ -6,7 +6,7 @@ jobs:
       - image: cimg/postgres:14.0
         auth:
           username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference,
         environment:
           POSTGRES_USER: postgres
     steps:
