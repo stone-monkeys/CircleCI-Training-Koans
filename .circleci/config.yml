@@ -10,11 +10,7 @@ jobs:
       - run:
           name: Run Hello test
           command: |
-            bash src/test_hello.sh
-      - run:
-          name: Run Goodbye test
-          command: |
-            bash src/test_goodbye.sh
+            circleci tests glob src/test_*.sh | circleci tests split
 workflows:
   version: 2
   test:
