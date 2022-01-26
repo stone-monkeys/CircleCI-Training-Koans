@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker: 
-      -image: circleci/node
+      - image: circleci/node
     steps:
       - checkout
       - run:
@@ -17,3 +17,12 @@ jobs:
       - save_cache:
           key: v1-dependencies-
           paths: ~/cache
+
+# version: 2.1
+# jobs:
+#   build:
+#     docker: # use the docker executor type; machine and macos executors are also supported
+#       - image: circleci/node # the primary container, where your job's commands are run
+#     steps:
+#       - checkout # check out the code in the project directory
+#       - run: echo "hello world" # run the `echo` command
