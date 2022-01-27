@@ -10,7 +10,9 @@ jobs:
       - run:
           name: Run Hello test
           command: |
-            circleci tests glob src/test_*.sh | circleci tests split
+            TEST=$(circleci tests glob src/test_*.sh | circleci tests split)
+
+            bash $TEST
 workflows:
   version: 2
   test:
