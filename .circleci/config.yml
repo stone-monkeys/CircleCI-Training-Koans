@@ -1,22 +1,27 @@
-version: 2
+version: 2.1
+
 jobs:
   build:
     docker:
-      - image: circleci/node
-      - image: cimg/postgres:14.0
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference,
-        environment:
-          POSTGRES_USER: postgres
+      - image: cimg/node:12.16
     steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - checkout
+      # Uncomment below and set the key to point to the proper file
+      - restore_cache:
+          name: Restore Yarn Package Json Cache
+          keys:
+            - node-cache-{{ checksum "package-lock.json" }}   
       - run:
-          name: install dockerize # This is a utility that will attempt to connect to a database, in place of an application for this sample.
-          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-          environment:
-            DOCKERIZE_VERSION: v0.3.0
-      - run:
-          name: Wait for db # If no database is found in 1 minute the job will fail.
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+          name: Install Dependencies
+          command: yarn install --immutable
+      # Uncomment below and set the key to point to the proper file
+      #- save_cache:
+          #name: Save Yarn Package Json Cache
+          #key: 
+          #paths:
+            #- ~/.cache/yarn
+
+workflows:
+  cache-save-and-restore:
+    jobs:
+      - build
