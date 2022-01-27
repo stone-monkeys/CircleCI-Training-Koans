@@ -6,14 +6,17 @@ jobs:
       - image: cimg/node:12.16
     steps:
       - checkout
+      
       # Uncomment below and set the key to point to the proper file
       - restore_cache:
           name: Restore Yarn Package Json Cache
           keys:
             - node-cache-{{ checksum "package.json" }}   
+      
       - run:
           name: Install Dependencies
           command: yarn install --immutable
+      
       # Uncomment below and set the key to point to the proper file
       - save_cache:
           name: Save Yarn Package Json Cache
