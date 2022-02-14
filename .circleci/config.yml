@@ -33,4 +33,4 @@ workflows:
             - test
           filters:
             tags:
-              only: ["beta-main-0.1.1", "beta-secondary-0.1.1"]
+              only: /^config-test.*/
