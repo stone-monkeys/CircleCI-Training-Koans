@@ -45,15 +45,15 @@ jobs:
             paths:
               - '*'
 
-  # deploy:
-  #     docker:
-  #       - image: node
-  #     steps:
-  #       - attach_workspace:
-  #           at: <location>
-  #       - store_artifacts: # See circleci.com/docs/2.0/artifacts/ for more details.
-  #           path: app
-  #           destination: apps
+  deploy:
+      docker:
+        - image: node
+      steps:
+        - attach_workspace:
+            at: <location>
+        - store_artifacts: # See circleci.com/docs/2.0/artifacts/ for more details.
+            path: app
+            destination: apps
 
 workflows:
   version: 2
