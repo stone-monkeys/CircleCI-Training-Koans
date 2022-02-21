@@ -50,7 +50,7 @@ jobs:
         - image: node
       steps:
         - attach_workspace:
-            at: <location>
+            at: app
         - store_artifacts: # See circleci.com/docs/2.0/artifacts/ for more details.
             path: app
             destination: apps
@@ -62,8 +62,8 @@ workflows:
       - build-linux
       - build-mac
       - build-windows
-      # - deploy:
-      #     requires:
-      #       - build-linux
-      #       - build-mac
-      #       - build-windows
+      - deploy:
+          requires:
+            - build-linux
+            - build-mac
+            - build-windows
