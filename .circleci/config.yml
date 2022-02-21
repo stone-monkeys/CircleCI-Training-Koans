@@ -26,7 +26,7 @@ jobs:
         - run: cd ~/project/app && pwd && ls
           # Edit below here
         - persist_to_workspace: 
-            root: app/linux
+            root: app/windows
             paths:
               - '*'
 
@@ -41,7 +41,7 @@ jobs:
         - run: cd ~/project/app && pwd && ls
           # Edit below here
         - persist_to_workspace: 
-            root: app/linux
+            root: app/mac
             paths:
               - '*'
 
