@@ -1,37 +1,69 @@
 version: 2.1
-
-executors:
-  linux:
-    docker:
-      - image: cimg/base:2021.10
-  macos:
-    macos:
-      xcode: 12.5.1
-
-orbs:
-  node: circleci/node@4.7.0
-
 jobs:
-  test:
-    parameters:
-      os:
-        type: executor
-      node-version:
-        type: string
-    executor: << parameters.os >>
+  build-linux:
+    docker:
+      - image: node
     steps:
-      - checkout
-      - node/install:
-          node-version: << parameters.node-version >>
-          install-yarn: true
-      - run:
-          command: echo "running matrix job for << parameters.os >> << parameters.node-version >>"
+        - run: mkdir -p app/linux
+        - run:
+            name: Generate app
+            command: echo app >> app/linux/app.linux
+        - run: cd ~/project/app && pwd && ls
+          # Edit below here
+        - persist_to_workspace: 
+            root: build_output
+            paths:
+              - '*'
+
+  build-windows:
+    docker:
+      - image: node # use your imagination, using all linux/docker for ease-of-use
+    steps:
+        - run: mkdir -p app/windows
+        - run:
+            name: Generate app
+            command: echo app >> app/windows/app.windows
+        - run: cd ~/project/app && pwd && ls
+          # Edit below here
+        - persist_to_workspace: 
+            root: build_output
+            paths:
+              - '*'
+
+  build-mac:
+      docker:
+        - image: node # use your imagination, using all linux/docker for ease-of-use
+      steps:
+        - run: mkdir -p app/mac
+        - run:
+            name: Generate app
+            command: echo app >> app/mac/app.mac
+        - run: cd ~/project/app && pwd && ls
+          # Edit below here
+        - persist_to_workspace: 
+            root: build_output
+            paths:
+              - '*'
+
+  # deploy:
+  #     docker:
+  #       - image: node
+  #     steps:
+  #       - attach_workspace:
+  #           at: <location>
+  #       - store_artifacts: # See circleci.com/docs/2.0/artifacts/ for more details.
+  #           path: app
+  #           destination: apps
 
 workflows:
-  all-tests:
+  version: 2
+  build_and_deploy:
     jobs:
-      - test:
-          matrix:
-            parameters:
-              os: ['linux', 'macos']
-              node-version: ["12.9.1", "13.9.0", "14.18.2", "16.13.1"]
+      - build-linux
+      - build-mac
+      - build-windows
+      # - deploy:
+      #     requires:
+      #       - build-linux
+      #       - build-mac
+      #       - build-windows
