@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  win: circleci/windows@2.2.0
+
 jobs:
   build-docker:
     docker:
@@ -21,6 +24,14 @@ jobs:
     resource_class: large
     steps:
      - run: echo "on machine"
+  
+  build-windows: # name of your job
+    executor: win/default # executor type
+
+    steps:
+      # Commands are run in a Windows virtual machine environment
+      - checkout
+      - run: Write-Host 'Hello, Windows'
 
 workflows:
   build-all:
@@ -28,3 +39,4 @@ workflows:
       - build-docker
       - build-macos
       - build-machine
+      - build-windows
