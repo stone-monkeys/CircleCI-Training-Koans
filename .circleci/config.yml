@@ -9,14 +9,14 @@ commands:
         default: "~/randomfolder"
     steps:
       - run: echo "Log file" > <<parameters.path>>/log.txt
-#   endMission:
-#     description: "Use the parameters of this command to exit this mission with a green build."
-#     parameters:
-#       exitCode:
-#         type: integer
-#         default: 1
-#     steps:
-#       - run: exit <<parameters.exitCode>>
+  endmission:
+    description: "Use the parameters of this command to exit this mission with a green build."
+    parameters:
+      exitCode:
+        type: integer
+        default: 1
+    steps:
+      - run: exit <<parameters.exitCode>>
 
 jobs:
   orb-intro:
@@ -33,7 +33,7 @@ jobs:
               echo "The log should exist at ~/randomfolder/log.txt after running the 'generatelogs' command"
               exit 1
             fi
-      # - endMission
+      - endmission
 
 
 
