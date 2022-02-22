@@ -24,13 +24,13 @@ jobs:
       - image: circleci/node:latest
     steps:
       - run: echo "console.log('complete')" | node
-      - run: mkdir /home/circleci/randomfoler
+      - run: mkdir /home/circleci/randomfolder
       - generatelogs
       - run:
           name: Check for logs - DO NOT MODIFY
           command: |
-            if [ ! -f ~/randomfoler/log.txt ]; then
-              echo "The log should exist at ~/randomfoler/log.txt after running the 'generatelogs' command"
+            if [ ! -f ~/randomfolder/log.txt ]; then
+              echo "The log should exist at ~/randomfolder/log.txt after running the 'generatelogs' command"
               exit 1
             fi
       # - endMission
