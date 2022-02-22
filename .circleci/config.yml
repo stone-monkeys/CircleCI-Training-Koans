@@ -1,45 +1,20 @@
 version: 2.1
 
-commands:
-  generatelogs:
-    description: "A command to generate a log file"
-    parameters:
-      path:
-        type: string  
-        default: "~/randomfolder"
-    steps:
-      - run: echo "Log file" > <<parameters.path>>/log.txt
-  endmission:
-    description: "Use the parameters of this command to exit this mission with a green build."
-    parameters:
-      exitCode:
-        type: integer
-        default: 1
-    steps:
-      - run: exit <<parameters.exitCode>>
-
 jobs:
-  orb-intro:
+  build-docker:
     docker:
-      - image: circleci/node:latest
+      - image: cimg/node:17.2.0
     steps:
-      - run: echo "console.log('complete')" | node
-      - run: mkdir /home/circleci/randomfolder
-      - generatelogs
-      - run:
-          name: Check for logs - DO NOT MODIFY
-          command: |
-            if [ ! -f ~/randomfolder/log.txt ]; then
-              echo "The log should exist at ~/randomfolder/log.txt after running the 'generatelogs' command"
-              exit 1
-            fi
-      - endmission:
-          exitCode: 0
-
-
+      - run: echo "docker image"
+  
+  build-macos:
+    macos:
+      xcode: 12.5.1
+    steps:
+      - run: xcodebuild -version
 
 workflows:
-  version: 2
-  orb-intro-workflow:
+  build-all:
     jobs:
-      - orb-intro
+      - build-docker
+      - build-macos
