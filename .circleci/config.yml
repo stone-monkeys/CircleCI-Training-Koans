@@ -33,7 +33,8 @@ jobs:
               echo "The log should exist at ~/randomfolder/log.txt after running the 'generatelogs' command"
               exit 1
             fi
-      - endmission
+      - endmission:
+          exitCode: 0
 
 
 
