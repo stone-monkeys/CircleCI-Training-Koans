@@ -1,14 +1,14 @@
 version: 2.1
 
-# commands:
-#   generatelogs:
-#     description: "A command to generate a log file"
-#     parameters:
-#       path:
-#         type: string
-#         default: "~/randomfolder"
-#     steps:
-#       - run: echo "Log file" > <<parameters.path>>/log.txt
+commands:
+  generatelogs:
+    description: "A command to generate a log file"
+    parameters:
+      path:
+        type: string  
+        default: "~/randomfolder"
+    steps:
+      - run: echo "Log file" > <<parameters.path>>/log.txt
 #   endMission:
 #     description: "Use the parameters of this command to exit this mission with a green build."
 #     parameters:
@@ -24,7 +24,7 @@ jobs:
       - image: circleci/node:latest
     steps:
       - run: echo "console.log('complete')" | node
-      # - generatelogs
+      - generatelogs
       - run:
           name: Check for logs - DO NOT MODIFY
           command: |
