@@ -24,7 +24,7 @@ jobs:
       - image: circleci/node:latest
     steps:
       - run: echo "console.log('complete')" | node
-      - run: mkdir randomfoler
+      - run: mkdir /home/circleci/randomfoler
       - generatelogs
       - run:
           name: Check for logs - DO NOT MODIFY
