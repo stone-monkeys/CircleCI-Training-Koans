@@ -13,8 +13,16 @@ jobs:
     steps:
       - run: xcodebuild -version
 
+  build-machine:
+    machine:
+      image: ubuntu-1604:202007-01
+    resource_class: large
+    steps:
+     - run: echo "on machine"
+
 workflows:
   build-all:
     jobs:
       - build-docker
       - build-macos
+      - build-machine
